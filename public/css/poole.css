@@ -377,6 +377,11 @@ tbody tr:nth-child(odd) th {
   color: inherit;
 }
 
+/* Comments */
+
+.comments {
+  border-top: 1px solid #eee;
+}
 
 /*
  * Pagination
