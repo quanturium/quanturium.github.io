@@ -4,7 +4,7 @@
  <title>Quanturium - Improving Android apps performance and quality</title>
  <link href="http://quanturium.github.io/atom.xml" rel="self"/>
  <link href="http://quanturium.github.io/"/>
- <updated>2015-04-19T17:06:54-07:00</updated>
+ <updated>2015-04-20T14:33:04-07:00</updated>
  <id>http://quanturium.github.io</id>
  <author>
    <name>Quanturium</name>
@@ -140,9 +140,6 @@
     &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
       &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parentCursor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;parentCursor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-
-      &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;childrenCursor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;childrenCursor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;directoryCursor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
