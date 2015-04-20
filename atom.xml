@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
- <title>Quanturium - Android Diary</title>
+ <title>Quanturium - Improving Android apps performance and quality</title>
  <link href="http://quanturium.github.io/atom.xml" rel="self"/>
  <link href="http://quanturium.github.io/"/>
- <updated>2015-04-19T16:41:04-07:00</updated>
+ <updated>2015-04-19T17:06:54-07:00</updated>
  <id>http://quanturium.github.io</id>
  <author>
    <name>Quanturium</name>
