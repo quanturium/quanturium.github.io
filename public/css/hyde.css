@@ -273,6 +273,10 @@ a.sidebar-nav-item:focus {
   margin-bottom: 1rem;
 }
 
+.theme-base-0b .post-title a{
+  color: #303030;
+}
+
 .theme-base-0b .content a:hover,
 .theme-base-0b .content a:focus {
   color: #677940;
