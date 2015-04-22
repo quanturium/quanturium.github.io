@@ -4,7 +4,7 @@
  <title>Quanturium - Improving Android apps performance and quality</title>
  <link href="http://quanturium.github.io/atom.xml" rel="self"/>
  <link href="http://quanturium.github.io/"/>
- <updated>2015-04-20T14:33:04-07:00</updated>
+ <updated>2015-04-22T11:09:13-07:00</updated>
  <id>http://quanturium.github.io</id>
  <author>
    <name>Quanturium</name>
@@ -23,7 +23,7 @@
 
 &lt;p&gt;In this article, I&amp;rsquo;m going to explain a simple way to go further with loaders by extending the &lt;strong&gt;AsyncTaskLoader&lt;/strong&gt; class. As a result, we&amp;rsquo;ll be able to execute multiple queries as well as other long-lasting operations in the background.&lt;/p&gt;
 
-&lt;h3 id=&quot;understanding&quot;&gt;Understanding&lt;/h3&gt;
+&lt;h2 id=&quot;understanding&quot;&gt;Understanding&lt;/h2&gt;
 
 &lt;p&gt;We are going to modify our activity to use our own implementation of the loader pattern. If you followed &lt;a href=&quot;https://developer.android.com/training/load-data-background/setup-loader.html&quot;&gt;the tutorial on developer.android.com&lt;/a&gt; to query a content provider with CursorLoaders, your activity must be implementing the &lt;code&gt;LoaderManager.LoaderCallbacks&amp;lt;D&amp;gt;&lt;/code&gt; interface and override the three following methods:&lt;/p&gt;
 
@@ -35,7 +35,7 @@
 
 &lt;p&gt;Typically the interface &lt;a href=&quot;http://developer.android.com/reference/android/database/Cursor.html&quot;&gt;Cursor&lt;/a&gt; is used for the generic part of the implementation (like this &lt;code&gt;LoaderManager.LoaderCallbacks&amp;lt;Cursor&amp;gt;&lt;/code&gt;) as the object returned by the Loader. Since we want to return more than one Cursor and perform more than one query operation in the background, we are going to use our own implementation of the Cursor interface thanks to the &lt;a href=&quot;http://developer.android.com/reference/android/database/CursorWrapper.html&quot;&gt;CursorWrapper&lt;/a&gt; class.&lt;/p&gt;
 
-&lt;h3 id=&quot;setting-up-the-activity&quot;&gt;Setting up the activity&lt;/h3&gt;
+&lt;h2 id=&quot;setting-up-the-activity&quot;&gt;Setting up the activity&lt;/h2&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MainActivity&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LoaderManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;LoaderCallbacks&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DirectoryCursor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
@@ -64,7 +64,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Now that the activity is set up, let&amp;rsquo;s implement the &lt;strong&gt;DirectoryCursor&lt;/strong&gt; and &lt;strong&gt;DirectoryCursorLoader&lt;/strong&gt; classes.&lt;/p&gt;
 
-&lt;h3 id=&quot;using-a-different-cursor&quot;&gt;Using a different cursor&lt;/h3&gt;
+&lt;h2 id=&quot;using-a-different-cursor&quot;&gt;Using a different cursor&lt;/h2&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;DirectoryCursor&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CursorWrapper&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;directory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
@@ -83,7 +83,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;CursorWrapper is just a class implementing the Cursor interface. By extending it, we can override all the methods of the Cursor interface. In our case we don&amp;rsquo;t want to do any of that, we just want to add more data to the class. Inside the constructor, we are calling the super method with our cursor containing all the files belonging to the directory. This will insure a transparent implementation and will work exactly the same from a &lt;strong&gt;CursorAdapter&lt;/strong&gt; standpoint.&lt;/p&gt;
 
-&lt;h3 id=&quot;extending-the-asynctaskloader&quot;&gt;Extending the AsyncTaskLoader&lt;/h3&gt;
+&lt;h2 id=&quot;extending-the-asynctaskloader&quot;&gt;Extending the AsyncTaskLoader&lt;/h2&gt;
 
 &lt;p&gt;We are going to implement our DirectoryCursorLoader class which will load data in the background. This one is a little longer to implement. To achieve the following code, I&amp;rsquo;ve copied the source code of the CursorLoader class, removed the parts we didn&amp;rsquo;t need and then I&amp;rsquo;ve implemented the &lt;code&gt;loadInBackground()&lt;/code&gt; method which will be responsible of our custom logic. Let&amp;rsquo;s take a look at this class and the &lt;code&gt;loadInBackgorund()&lt;/code&gt; method:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;abstract&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;DirectoryCursorLoader&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AsyncTaskLoader&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DirectoryCursor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;

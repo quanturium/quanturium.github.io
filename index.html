@@ -89,11 +89,11 @@
         
       
       <a class="sidebar-nav-item" href="/atom.xml">Feed</a><br/>
-      <a href="https://www.linkedin.com/in/arnaudfrugier"><img src="/public/assets/linkedin-5-32.png" /></a>
-      <a href="http://stackoverflow.com/users/1127724/quanturium"><img src="/public/assets/stackoverflow-5-32.png" /></a>
-      <a href="https://github.com/quanturium"><img src="/public/assets/github-10-32.png" /></a>
-      <a href="https://plus.google.com/u/0/114838031341699145947"><img src="/public/assets/google-plus-5-32.png" /></a>            
-      <a href="https://twitter.com/quanturium"><img src="/public/assets/twitter-5-32.png" /></a>
+
+      <a target="_blank" href="https://www.linkedin.com/in/arnaudfrugier"><img src="/public/assets/linkedin-5-32.png" /></a>
+      <a target="_blank" href="http://stackoverflow.com/users/1127724/quanturium"><img src="/public/assets/stackoverflow-5-32.png" /></a>
+      <a target="_blank" href="https://github.com/quanturium"><img src="/public/assets/github-10-32.png" /></a>
+      <a target="_blank" href="https://plus.google.com/u/0/114838031341699145947"><img src="/public/assets/google-plus-5-32.png" /></a>
     </nav>
   </div>
 </div>
@@ -116,208 +116,6 @@
 
     <p>CursorLoaders are a great way to load data from a content provider in the background while managing correctly the Activity lifecycle. When creating the CursorLoader in the <code>onCreateLoader()</code> method, you specify a url, projections and selections with their arguments to be executed against the content provider and get result back. Once the query is executed in the background, a Cursor is returned to your activity via the <code>onLoadFinished()</code> method. This is great but limited to one and only one query against the content provider.</p>
 
-<p>Recently I needed to return the content of a directory from a content provider. I had to display the list of files as well as the parent folder (the directory itself).</p>
-
-<p>In this article, I&rsquo;m going to explain a simple way to go further with loaders by extending the <strong>AsyncTaskLoader</strong> class. As a result, we&rsquo;ll be able to execute multiple queries as well as other long-lasting operations in the background.</p>
-
-<h3 id="understanding">Understanding</h3>
-
-<p>We are going to modify our activity to use our own implementation of the loader pattern. If you followed <a href="https://developer.android.com/training/load-data-background/setup-loader.html">the tutorial on developer.android.com</a> to query a content provider with CursorLoaders, your activity must be implementing the <code>LoaderManager.LoaderCallbacks&lt;D&gt;</code> interface and override the three following methods:</p>
-
-<ul>
-<li><code>public Loader&lt;D&gt; onCreateLoader(int id, Bundle args);</code></li>
-<li><code>public void onLoadFinished(Loader&lt;D&gt; loader, D data);</code></li>
-<li><code>public void onLoaderReset(Loader&lt;D&gt; loader);</code></li>
-</ul>
-
-<p>Typically the interface <a href="http://developer.android.com/reference/android/database/Cursor.html">Cursor</a> is used for the generic part of the implementation (like this <code>LoaderManager.LoaderCallbacks&lt;Cursor&gt;</code>) as the object returned by the Loader. Since we want to return more than one Cursor and perform more than one query operation in the background, we are going to use our own implementation of the Cursor interface thanks to the <a href="http://developer.android.com/reference/android/database/CursorWrapper.html">CursorWrapper</a> class.</p>
-
-<h3 id="setting-up-the-activity">Setting up the activity</h3>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainActivity</span> <span class="kd">implements</span> <span class="n">LoaderManager</span><span class="o">.</span><span class="na">LoaderCallbacks</span><span class="o">&lt;</span><span class="n">DirectoryCursor</span><span class="o">&gt;</span>
-<span class="o">{</span>
-  <span class="nd">@Override</span>
-  <span class="kd">public</span> <span class="n">Loader</span><span class="o">&lt;</span><span class="n">DirectoryCursor</span><span class="o">&gt;</span> <span class="nf">onCreateLoader</span> <span class="o">(</span><span class="kt">int</span> <span class="n">loaderId</span><span class="o">,</span> <span class="n">Bundle</span> <span class="n">args</span><span class="o">)</span>
-  <span class="o">{</span>
-    <span class="k">return</span> <span class="k">new</span> <span class="nf">DirectoryCursorLoader</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
-  <span class="o">}</span>
-
-  <span class="nd">@Override</span>
-  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onLoadFinished</span> <span class="o">(</span><span class="n">Loader</span><span class="o">&lt;</span><span class="n">DirectoryCursor</span><span class="o">&gt;</span> <span class="n">loader</span><span class="o">,</span> <span class="n">DirectoryCursor</span> <span class="n">data</span><span class="o">)</span>
-  <span class="o">{</span>
-    <span class="k">if</span><span class="o">(</span><span class="n">data</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
-    <span class="o">{</span>
-      <span class="n">File</span> <span class="n">directory</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">getDirectory</span><span class="o">();</span> <span class="c1">// The directory item</span>
-      <span class="n">mAdapter</span><span class="o">.</span><span class="na">changeCursor</span><span class="o">(</span><span class="n">data</span><span class="o">);</span> <span class="c1">// data is a Cursor containing the list of files inside that directory</span>
-    <span class="o">}</span>
-  <span class="o">}</span>
-
-  <span class="nd">@Override</span>
-  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onLoaderReset</span> <span class="o">(</span><span class="n">Loader</span><span class="o">&lt;</span><span class="n">DirectoryCursor</span><span class="o">&gt;</span> <span class="n">loader</span><span class="o">)</span>
-  <span class="o">{</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">mAdapter</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
-      <span class="n">mAdapter</span><span class="o">.</span><span class="na">changeCursor</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
-  <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div>
-<p>Now that the activity is set up, let&rsquo;s implement the <strong>DirectoryCursor</strong> and <strong>DirectoryCursorLoader</strong> classes.</p>
-
-<h3 id="using-a-different-cursor">Using a different cursor</h3>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DirectoryCursor</span> <span class="kd">extends</span> <span class="n">CursorWrapper</span>
-<span class="o">{</span>
-  <span class="kd">private</span> <span class="kd">final</span> <span class="n">File</span> <span class="n">directory</span><span class="o">;</span>
-
-  <span class="kd">public</span> <span class="nf">DirectoryCursor</span> <span class="o">(</span><span class="n">File</span> <span class="n">directory</span><span class="o">,</span> <span class="n">Cursor</span> <span class="n">childrenCursor</span><span class="o">)</span>
-  <span class="o">{</span>
-    <span class="kd">super</span><span class="o">(</span><span class="n">childrenCursor</span><span class="o">);</span>
-    <span class="k">this</span><span class="o">.</span><span class="na">directory</span> <span class="o">=</span> <span class="n">directory</span><span class="o">;</span>
-  <span class="o">}</span>
-
-  <span class="kd">public</span> <span class="n">File</span> <span class="nf">getDirectory</span><span class="o">()</span>
-  <span class="o">{</span>
-    <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">directory</span><span class="o">;</span>
-  <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div>
-<p>CursorWrapper is just a class implementing the Cursor interface. By extending it, we can override all the methods of the Cursor interface. In our case we don&rsquo;t want to do any of that, we just want to add more data to the class. Inside the constructor, we are calling the super method with our cursor containing all the files belonging to the directory. This will insure a transparent implementation and will work exactly the same from a <strong>CursorAdapter</strong> standpoint.</p>
-
-<h3 id="extending-the-asynctaskloader">Extending the AsyncTaskLoader</h3>
-
-<p>We are going to implement our DirectoryCursorLoader class which will load data in the background. This one is a little longer to implement. To achieve the following code, I&rsquo;ve copied the source code of the CursorLoader class, removed the parts we didn&rsquo;t need and then I&rsquo;ve implemented the <code>loadInBackground()</code> method which will be responsible of our custom logic. Let&rsquo;s take a look at this class and the <code>loadInBackgorund()</code> method:</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">DirectoryCursorLoader</span> <span class="kd">extends</span> <span class="n">AsyncTaskLoader</span><span class="o">&lt;</span><span class="n">DirectoryCursor</span><span class="o">&gt;</span>
-<span class="o">{</span>
-  <span class="kd">final</span> <span class="n">ForceLoadContentObserver</span> <span class="n">mObserver</span><span class="o">;</span>
-  <span class="n">DirectoryCursor</span> <span class="n">mCursor</span><span class="o">;</span>
-
-  <span class="kd">public</span> <span class="nf">DirectoryCursorLoader</span> <span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">)</span>
-  <span class="o">{</span>
-  <span class="kd">super</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
-  <span class="n">mObserver</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ForceLoadContentObserver</span><span class="o">();</span>
-  <span class="o">}</span>
-
-  <span class="cm">/* Runs on a worker thread */</span>
-  <span class="nd">@Override</span>
-  <span class="kd">public</span> <span class="n">DirectoryCursor</span> <span class="nf">loadInBackground</span> <span class="o">()</span>
-  <span class="o">{</span>
-    <span class="n">DirectoryCursor</span> <span class="n">directoryCursor</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-    <span class="n">Cursor</span> <span class="n">parentCursor</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-    <span class="n">Cursor</span> <span class="n">childrenCursor</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-
-    <span class="k">try</span>
-    <span class="o">{</span>
-      <span class="c1">// Execute our first query against the content provider which will get the parent directory</span>
-      <span class="n">parentCursor</span> <span class="o">=</span> <span class="n">getContext</span><span class="o">().</span><span class="na">getContentResolver</span><span class="o">().</span><span class="na">query</span><span class="o">([...]);</span>
-
-      <span class="k">if</span> <span class="o">(</span><span class="n">parentCursor</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">parentCursor</span><span class="o">.</span><span class="na">moveToFirst</span><span class="o">())</span>
-      <span class="o">{</span>
-        <span class="c1">// Map the cursor to an object. This is basically getting all the columns from the cursor and setting them as instance variables inside our newly created File object.</span>
-        <span class="n">File</span> <span class="n">directory</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">File</span><span class="o">(</span><span class="n">parentCursor</span><span class="o">);</span>
-
-        <span class="c1">// Execute our second query based on the result of the first one which will get the list of files belonging to the directory object</span>
-        <span class="n">childrenCursor</span> <span class="o">=</span> <span class="n">getContext</span><span class="o">().</span><span class="na">getContentResolver</span><span class="o">().</span><span class="na">query</span><span class="o">([...]);</span>
-
-        <span class="k">if</span> <span class="o">(</span><span class="n">childrenCursor</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
-        <span class="o">{</span>
-          <span class="n">directoryCursor</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">DirectoryCursor</span><span class="o">(</span><span class="n">directory</span><span class="o">,</span> <span class="n">childrenCursor</span><span class="o">);</span>
-
-          <span class="k">try</span>
-          <span class="o">{</span>
-            <span class="c1">// Ensure the cursor window is filled.</span>
-            <span class="n">directoryCursor</span><span class="o">.</span><span class="na">getCount</span><span class="o">();</span>
-            <span class="n">directoryCursor</span><span class="o">.</span><span class="na">registerContentObserver</span><span class="o">(</span><span class="n">mObserver</span><span class="o">);</span>
-          <span class="o">}</span>
-          <span class="k">catch</span> <span class="o">(</span><span class="n">RuntimeException</span> <span class="n">ex</span><span class="o">)</span>
-          <span class="o">{</span>
-            <span class="n">directoryCursor</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-            <span class="k">throw</span> <span class="n">ex</span><span class="o">;</span>
-          <span class="o">}</span>
-        <span class="o">}</span>
-      <span class="o">}</span>
-    <span class="o">}</span>
-    <span class="k">finally</span>
-    <span class="o">{</span>
-      <span class="k">if</span><span class="o">(</span><span class="n">parentCursor</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
-        <span class="n">parentCursor</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-    <span class="o">}</span>
-
-    <span class="k">return</span> <span class="n">directoryCursor</span><span class="o">;</span>
-  <span class="o">}</span>
-
-  <span class="nd">@Override</span>
-  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onStartLoading</span> <span class="o">()</span>
-  <span class="o">{</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">mCursor</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
-    <span class="o">{</span>
-      <span class="n">deliverResult</span><span class="o">(</span><span class="n">mCursor</span><span class="o">);</span>
-    <span class="o">}</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">takeContentChanged</span><span class="o">()</span> <span class="o">||</span> <span class="n">mCursor</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
-    <span class="o">{</span>
-      <span class="n">forceLoad</span><span class="o">();</span>
-    <span class="o">}</span>
-  <span class="o">}</span>
-
-  <span class="nd">@Override</span>
-  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onStopLoading</span> <span class="o">()</span>
-  <span class="o">{</span>
-    <span class="n">cancelLoad</span><span class="o">();</span>
-  <span class="o">}</span>
-
-  <span class="nd">@Override</span>
-  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCanceled</span> <span class="o">(</span><span class="n">DirectoryCursor</span> <span class="n">cursor</span><span class="o">)</span>
-  <span class="o">{</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">cursor</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">cursor</span><span class="o">.</span><span class="na">isClosed</span><span class="o">())</span>
-    <span class="o">{</span>
-      <span class="n">cursor</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-    <span class="o">}</span>
-  <span class="o">}</span>
-
-  <span class="nd">@Override</span>
-  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onReset</span> <span class="o">()</span>
-  <span class="o">{</span>
-    <span class="kd">super</span><span class="o">.</span><span class="na">onReset</span><span class="o">();</span>
-
-    <span class="c1">// Ensure the loader is stopped</span>
-    <span class="n">onStopLoading</span><span class="o">();</span>
-
-    <span class="k">if</span> <span class="o">(</span><span class="n">mCursor</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">mCursor</span><span class="o">.</span><span class="na">isClosed</span><span class="o">())</span>
-    <span class="o">{</span>
-      <span class="n">mCursor</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-    <span class="o">}</span>
-    <span class="n">mCursor</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-  <span class="o">}</span>
-
-  <span class="cm">/* Runs on the UI thread */</span>
-  <span class="nd">@Override</span>
-  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">deliverResult</span> <span class="o">(</span><span class="n">DirectoryCursor</span> <span class="n">cursor</span><span class="o">)</span>
-  <span class="o">{</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">isReset</span><span class="o">())</span>
-    <span class="o">{</span>
-      <span class="c1">// An async query came in while the loader is stopped</span>
-      <span class="k">if</span> <span class="o">(</span><span class="n">cursor</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
-      <span class="o">{</span>
-        <span class="n">cursor</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-      <span class="o">}</span>
-      <span class="k">return</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="n">Cursor</span> <span class="n">oldCursor</span> <span class="o">=</span> <span class="n">mCursor</span><span class="o">;</span>
-    <span class="n">mCursor</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">;</span>
-
-    <span class="k">if</span> <span class="o">(</span><span class="n">isStarted</span><span class="o">())</span>
-    <span class="o">{</span>
-      <span class="kd">super</span><span class="o">.</span><span class="na">deliverResult</span><span class="o">(</span><span class="n">cursor</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="k">if</span> <span class="o">(</span><span class="n">oldCursor</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">oldCursor</span> <span class="o">!=</span> <span class="n">cursor</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">oldCursor</span><span class="o">.</span><span class="na">isClosed</span><span class="o">())</span>
-    <span class="o">{</span>
-      <span class="n">oldCursor</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-    <span class="o">}</span>
-  <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div>
-<p>As you can see in the <code>loadInBackground()</code> method, we&rsquo;ve performed two different queries against the content provider. This is just an example of what you can do.</p>
-
-<p>An other great use of this is creating sections in your listview. Instead of looping over all the entries in the cursor adapter to figure out which one are sections or to insert sections between different items in the <strong>UI Thread</strong> doing it in the <code>loadInBackground()</code> method is way more efficient and will prevent jank.</p>
-
   </div>
   
   <div class="post">
@@ -334,14 +132,6 @@
 
     <p>Recently, I&rsquo;ve decided to replace the ListViews in my application with the new RecyclerView. Using Cursor all over my application, I needed an equivalent of the <code>CursorAdapter</code> class. I look up the the recycler-view <a href="http://developer.android.com/tools/support-library/features.html">support library</a> hoping I would find something ready to use but unfortunately there wasn&rsquo;t. I&rsquo;ve found a couple third-party implementations of a &ldquo;<strong>CursorRecyclerAdapter</strong>&rdquo; and decided to use one.
 A few weeks later, I was profiling my applications and noticed I had a memory problem. After using <a href="https://eclipse.org/mat/">MAT</a> to track down the leak, I realized the third-party class I included in my project was the culprit! Fixing the problem was easy, but I can&rsquo;t help myself thinking about all the developers looking for a <strong>CursorRecyclerAdapter</strong> library who found this leaky one and used it in their apps without noticing the problem.</p>
-
-<p>I&rsquo;ve decided to create my own version and publish it for all the Android developers out there who need it. This library is intended to work with or without a CursorLoader. I have also implemented an equivalent of the <code>SimpleCursorAdapter</code> class, named <strong>SimpleCursorRecyclerAdapter</strong>.</p>
-
-<script src="https://gist.github.com/46541c81aae2a916e31d.js"> </script>
-
-<p>And here is the implementation of <strong>SimpleCursorRecyclerAdapter</strong> :</p>
-
-<script src="https://gist.github.com/c8aa0599a3f984036525.js"> </script>
 
   </div>
   

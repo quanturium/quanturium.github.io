@@ -96,11 +96,11 @@
         
       
       <a class="sidebar-nav-item" href="/atom.xml">Feed</a><br/>
-      <a href="https://www.linkedin.com/in/arnaudfrugier"><img src="/public/assets/linkedin-5-32.png" /></a>
-      <a href="http://stackoverflow.com/users/1127724/quanturium"><img src="/public/assets/stackoverflow-5-32.png" /></a>
-      <a href="https://github.com/quanturium"><img src="/public/assets/github-10-32.png" /></a>
-      <a href="https://plus.google.com/u/0/114838031341699145947"><img src="/public/assets/google-plus-5-32.png" /></a>            
-      <a href="https://twitter.com/quanturium"><img src="/public/assets/twitter-5-32.png" /></a>
+
+      <a target="_blank" href="https://www.linkedin.com/in/arnaudfrugier"><img src="/public/assets/linkedin-5-32.png" /></a>
+      <a target="_blank" href="http://stackoverflow.com/users/1127724/quanturium"><img src="/public/assets/stackoverflow-5-32.png" /></a>
+      <a target="_blank" href="https://github.com/quanturium"><img src="/public/assets/github-10-32.png" /></a>
+      <a target="_blank" href="https://plus.google.com/u/0/114838031341699145947"><img src="/public/assets/google-plus-5-32.png" /></a>
     </nav>
   </div>
 </div>
@@ -116,7 +116,7 @@
 
 <p>In this article, I&rsquo;m going to explain a simple way to go further with loaders by extending the <strong>AsyncTaskLoader</strong> class. As a result, we&rsquo;ll be able to execute multiple queries as well as other long-lasting operations in the background.</p>
 
-<h3 id="understanding">Understanding</h3>
+<h2 id="understanding">Understanding</h2>
 
 <p>We are going to modify our activity to use our own implementation of the loader pattern. If you followed <a href="https://developer.android.com/training/load-data-background/setup-loader.html">the tutorial on developer.android.com</a> to query a content provider with CursorLoaders, your activity must be implementing the <code>LoaderManager.LoaderCallbacks&lt;D&gt;</code> interface and override the three following methods:</p>
 
@@ -128,7 +128,7 @@
 
 <p>Typically the interface <a href="http://developer.android.com/reference/android/database/Cursor.html">Cursor</a> is used for the generic part of the implementation (like this <code>LoaderManager.LoaderCallbacks&lt;Cursor&gt;</code>) as the object returned by the Loader. Since we want to return more than one Cursor and perform more than one query operation in the background, we are going to use our own implementation of the Cursor interface thanks to the <a href="http://developer.android.com/reference/android/database/CursorWrapper.html">CursorWrapper</a> class.</p>
 
-<h3 id="setting-up-the-activity">Setting up the activity</h3>
+<h2 id="setting-up-the-activity">Setting up the activity</h2>
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainActivity</span> <span class="kd">implements</span> <span class="n">LoaderManager</span><span class="o">.</span><span class="na">LoaderCallbacks</span><span class="o">&lt;</span><span class="n">DirectoryCursor</span><span class="o">&gt;</span>
 <span class="o">{</span>
   <span class="nd">@Override</span>
@@ -157,7 +157,7 @@
 </code></pre></div>
 <p>Now that the activity is set up, let&rsquo;s implement the <strong>DirectoryCursor</strong> and <strong>DirectoryCursorLoader</strong> classes.</p>
 
-<h3 id="using-a-different-cursor">Using a different cursor</h3>
+<h2 id="using-a-different-cursor">Using a different cursor</h2>
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DirectoryCursor</span> <span class="kd">extends</span> <span class="n">CursorWrapper</span>
 <span class="o">{</span>
   <span class="kd">private</span> <span class="kd">final</span> <span class="n">File</span> <span class="n">directory</span><span class="o">;</span>
@@ -176,7 +176,7 @@
 </code></pre></div>
 <p>CursorWrapper is just a class implementing the Cursor interface. By extending it, we can override all the methods of the Cursor interface. In our case we don&rsquo;t want to do any of that, we just want to add more data to the class. Inside the constructor, we are calling the super method with our cursor containing all the files belonging to the directory. This will insure a transparent implementation and will work exactly the same from a <strong>CursorAdapter</strong> standpoint.</p>
 
-<h3 id="extending-the-asynctaskloader">Extending the AsyncTaskLoader</h3>
+<h2 id="extending-the-asynctaskloader">Extending the AsyncTaskLoader</h2>
 
 <p>We are going to implement our DirectoryCursorLoader class which will load data in the background. This one is a little longer to implement. To achieve the following code, I&rsquo;ve copied the source code of the CursorLoader class, removed the parts we didn&rsquo;t need and then I&rsquo;ve implemented the <code>loadInBackground()</code> method which will be responsible of our custom logic. Let&rsquo;s take a look at this class and the <code>loadInBackgorund()</code> method:</p>
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">DirectoryCursorLoader</span> <span class="kd">extends</span> <span class="n">AsyncTaskLoader</span><span class="o">&lt;</span><span class="n">DirectoryCursor</span><span class="o">&gt;</span>
