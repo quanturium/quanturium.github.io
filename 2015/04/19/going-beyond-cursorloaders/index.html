@@ -109,7 +109,7 @@
     <div class="content container">
       <div class="post">
   <h1 class="post-title">Going beyond CursorLoaders</h1>
-  <span class="post-date">19 Apr 2015</span>
+  <span class="post-date">19 Apr 2015 <a href="#disqus_thread" data-disqus-identifier="/2015/04/19/going-beyond-cursorloaders"></a></span>
   <p>CursorLoaders are a great way to load data from a content provider in the background while managing correctly the Activity lifecycle. When creating the CursorLoader in the <code>onCreateLoader()</code> method, you specify a url, projections and selections with their arguments to be executed against the content provider and get result back. Once the query is executed in the background, a Cursor is returned to your activity via the <code>onLoadFinished()</code> method. This is great but limited to one and only one query against the content provider.</p>
 
 <p>Recently I needed to return the content of a directory from a content provider. I had to display the list of files as well as the parent folder (the directory itself).</p>
@@ -315,6 +315,15 @@
 <p>An other great use of this is creating sections in your listview. Instead of looping over all the entries in the cursor adapter to figure out which one are sections or to insert sections between different items in the <strong>UI Thread</strong> doing it in the <code>loadInBackground()</code> method is way more efficient and will prevent jank.</p>
 
 </div>
+<script type="text/javascript">
+  var disqus_shortname = 'quanturium';
+  (function () {
+  var s = document.createElement('script'); s.async = true;
+  s.type = 'text/javascript';
+  s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  }());
+</script>
 
       
       

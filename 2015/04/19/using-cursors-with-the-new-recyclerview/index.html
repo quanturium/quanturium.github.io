@@ -109,7 +109,7 @@
     <div class="content container">
       <div class="post">
   <h1 class="post-title">Using Cursors with the new RecyclerView (CursorRecyclerAdapter)</h1>
-  <span class="post-date">19 Apr 2015</span>
+  <span class="post-date">19 Apr 2015 <a href="#disqus_thread" data-disqus-identifier="/2015/04/19/using-cursors-with-the-new-recyclerview"></a></span>
   <p>Recently, I&rsquo;ve decided to replace the ListViews in my application with the new RecyclerView. Using Cursor all over my application, I needed an equivalent of the <code>CursorAdapter</code> class. I look up the the recycler-view <a href="http://developer.android.com/tools/support-library/features.html">support library</a> hoping I would find something ready to use but unfortunately there wasn&rsquo;t. I&rsquo;ve found a couple third-party implementations of a &ldquo;<strong>CursorRecyclerAdapter</strong>&rdquo; and decided to use one.
 A few weeks later, I was profiling my applications and noticed I had a memory problem. After using <a href="https://eclipse.org/mat/">MAT</a> to track down the leak, I realized the third-party class I included in my project was the culprit! Fixing the problem was easy, but I can&rsquo;t help myself thinking about all the developers looking for a <strong>CursorRecyclerAdapter</strong> library who found this leaky one and used it in their apps without noticing the problem.</p>
 
@@ -122,6 +122,15 @@ A few weeks later, I was profiling my applications and noticed I had a memory pr
 <script src="https://gist.github.com/c8aa0599a3f984036525.js"> </script>
 
 </div>
+<script type="text/javascript">
+  var disqus_shortname = 'quanturium';
+  (function () {
+  var s = document.createElement('script'); s.async = true;
+  s.type = 'text/javascript';
+  s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  }());
+</script>
 
       
       
