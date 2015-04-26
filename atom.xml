@@ -4,7 +4,7 @@
  <title>Quanturium - Improving Android apps performance and quality</title>
  <link href="http://quanturium.github.io/atom.xml" rel="self"/>
  <link href="http://quanturium.github.io/"/>
- <updated>2015-04-26T12:45:53-07:00</updated>
+ <updated>2015-04-26T12:51:33-07:00</updated>
  <id>http://quanturium.github.io</id>
  <author>
    <name>Quanturium</name>
@@ -17,7 +17,7 @@
    <link href="http://quanturium.github.io/2015/04/26/new-version-of-the-appcompat-library-2210/"/>
    <updated>2015-04-26T12:41:00-07:00</updated>
    <id>http://quanturium.github.io/2015/04/26/new-version-of-the-appcompat-library-2210</id>
-   <content type="html">&lt;p&gt;Early this week, google released a new version of their support library (22.1). In this article we are going to take a look at one specific library, AppCompat-22.1.0, and see how it brings a better consistent UI accross Android versions.&lt;/p&gt;
+   <content type="html">&lt;p&gt;Early this week, Google released a new version of their support library (22.1). In this article we are going to take a look at one specific library, AppCompat-22.1.0, and see how it brings a better consistent UI accross Android versions.&lt;/p&gt;
 
 &lt;h2 id=&quot;setting-up-the-project&quot;&gt;Setting up the project&lt;/h2&gt;
 
