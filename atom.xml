@@ -4,7 +4,7 @@
  <title>Quanturium - Improving Android apps performance and quality</title>
  <link href="http://quanturium.github.io/atom.xml" rel="self"/>
  <link href="http://quanturium.github.io/"/>
- <updated>2015-04-26T12:51:33-07:00</updated>
+ <updated>2015-04-26T16:21:09-07:00</updated>
  <id>http://quanturium.github.io</id>
  <author>
    <name>Quanturium</name>
@@ -17,12 +17,12 @@
    <link href="http://quanturium.github.io/2015/04/26/new-version-of-the-appcompat-library-2210/"/>
    <updated>2015-04-26T12:41:00-07:00</updated>
    <id>http://quanturium.github.io/2015/04/26/new-version-of-the-appcompat-library-2210</id>
-   <content type="html">&lt;p&gt;Early this week, Google released a new version of their support library (22.1). In this article we are going to take a look at one specific library, AppCompat-22.1.0, and see how it brings a better consistent UI accross Android versions.&lt;/p&gt;
+   <content type="html">&lt;p&gt;Early this week, Google released a new version of their support library (22.1). In this article we are going to take a look at one specific library, AppCompat-22.1.1, and see how it brings a better consistent UI accross Android versions.&lt;/p&gt;
 
 &lt;h2 id=&quot;setting-up-the-project&quot;&gt;Setting up the project&lt;/h2&gt;
 
 &lt;p&gt;The first step is to include the appcompat-v7 library in your build.gradle file:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;&lt;span class=&quot;n&quot;&gt;compile&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;com.android.support:appcompat-v7:22.1.0&amp;#39;&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;&lt;span class=&quot;n&quot;&gt;compile&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;com.android.support:appcompat-v7:22.1.1&amp;#39;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;The second step is to make the main application theme extend &lt;strong&gt;Theme.AppCompat&lt;/strong&gt; to provide all the version specific logic in order to bring a consistent design of our app across Android versions. To do that, let&amp;rsquo;s add this in our style.xml file:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;resources&amp;gt;&lt;/span&gt;
@@ -149,8 +149,8 @@
             &lt;span class=&quot;na&quot;&gt;android:layout_marginBottom=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;16dp&amp;quot;&lt;/span&gt;
             &lt;span class=&quot;na&quot;&gt;android:text=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Remember me&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
 
-&lt;span class=&quot;hll&quot;&gt;        &lt;span class=&quot;nt&quot;&gt;&amp;lt;android.support.v7.widget.AppCompatButton&lt;/span&gt;
-&lt;/span&gt;            &lt;span class=&quot;na&quot;&gt;android:id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;@+id/button&amp;quot;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;Button&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;android:id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;@+id/button&amp;quot;&lt;/span&gt;
             &lt;span class=&quot;na&quot;&gt;android:layout_width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;match_parent&amp;quot;&lt;/span&gt;
             &lt;span class=&quot;na&quot;&gt;android:layout_height=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;wrap_content&amp;quot;&lt;/span&gt;
             &lt;span class=&quot;na&quot;&gt;android:layout_marginBottom=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;16dp&amp;quot;&lt;/span&gt;
