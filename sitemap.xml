@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>http://quanturium.github.io/2015/04/19/using-cursors-with-the-new-recyclerview/</loc>
+<loc>https://quanturium.github.io/2015/04/19/using-cursors-with-the-new-recyclerview/</loc>
 <lastmod>2015-04-19T16:16:00-07:00</lastmod>
 </url>
 <url>
-<loc>http://quanturium.github.io/2015/04/19/going-beyond-cursorloaders/</loc>
+<loc>https://quanturium.github.io/2015/04/19/going-beyond-cursorloaders/</loc>
 <lastmod>2015-04-19T16:17:00-07:00</lastmod>
 </url>
 <url>
-<loc>http://quanturium.github.io/2015/04/26/new-version-of-the-appcompat-library-2210/</loc>
+<loc>https://quanturium.github.io/2015/04/26/new-version-of-the-appcompat-library-2210/</loc>
 <lastmod>2015-04-26T12:41:00-07:00</lastmod>
 </url>
 <url>
-<loc>http://quanturium.github.io/archive/</loc>
+<loc>https://quanturium.github.io/archive/</loc>
 </url>
 <url>
-<loc>http://quanturium.github.io/</loc>
+<loc>https://quanturium.github.io/</loc>
 </url>
 </urlset>

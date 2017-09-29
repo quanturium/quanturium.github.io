@@ -1,1 +1,1 @@
-Sitemap: http://quanturium.github.io/sitemap.xml
+Sitemap: https://quanturium.github.io/sitemap.xml

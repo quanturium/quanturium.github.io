@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
  <title>Quanturium - Improving Android apps performance and quality</title>
- <link href="http://quanturium.github.io/atom.xml" rel="self"/>
- <link href="http://quanturium.github.io/"/>
- <updated>2017-09-29T16:26:18-07:00</updated>
- <id>http://quanturium.github.io</id>
+ <link href="https://quanturium.github.io/atom.xml" rel="self"/>
+ <link href="https://quanturium.github.io/"/>
+ <updated>2017-09-29T16:30:44-07:00</updated>
+ <id>https://quanturium.github.io</id>
  <author>
    <name>Quanturium</name>
    <email></email>
@@ -14,9 +14,9 @@
  
  <entry>
    <title>New version of the AppCompat library (22.1.0)</title>
-   <link href="http://quanturium.github.io/2015/04/26/new-version-of-the-appcompat-library-2210/"/>
+   <link href="https://quanturium.github.io/2015/04/26/new-version-of-the-appcompat-library-2210/"/>
    <updated>2015-04-26T12:41:00-07:00</updated>
-   <id>http://quanturium.github.io/2015/04/26/new-version-of-the-appcompat-library-2210</id>
+   <id>https://quanturium.github.io/2015/04/26/new-version-of-the-appcompat-library-2210</id>
    <content type="html">&lt;p&gt;Early this week, Google released a new version of their support library (22.1). In this article we are going to take a look at one specific library, AppCompat-22.1.1, and see how it brings a better consistent UI accross Android versions.&lt;/p&gt;
 
 &lt;h2 id=&quot;setting-up-the-project&quot;&gt;Setting up the project&lt;/h2&gt;
@@ -229,9 +229,9 @@
  
  <entry>
    <title>Going beyond CursorLoaders</title>
-   <link href="http://quanturium.github.io/2015/04/19/going-beyond-cursorloaders/"/>
+   <link href="https://quanturium.github.io/2015/04/19/going-beyond-cursorloaders/"/>
    <updated>2015-04-19T16:17:00-07:00</updated>
-   <id>http://quanturium.github.io/2015/04/19/going-beyond-cursorloaders</id>
+   <id>https://quanturium.github.io/2015/04/19/going-beyond-cursorloaders</id>
    <content type="html">&lt;p&gt;CursorLoaders are a great way to load data from a content provider in the background while managing correctly the Activity lifecycle. When creating the CursorLoader in the &lt;code&gt;onCreateLoader()&lt;/code&gt; method, you specify a url, projections and selections with their arguments to be executed against the content provider and get result back. Once the query is executed in the background, a Cursor is returned to your activity via the &lt;code&gt;onLoadFinished()&lt;/code&gt; method. This is great but limited to one and only one query against the content provider.&lt;/p&gt;
 
 &lt;p&gt;Recently I needed to return the content of a directory from a content provider. I had to display the list of files as well as the parent folder (the directory itself).&lt;/p&gt;
@@ -440,9 +440,9 @@
  
  <entry>
    <title>Using Cursors with the new RecyclerView (CursorRecyclerAdapter)</title>
-   <link href="http://quanturium.github.io/2015/04/19/using-cursors-with-the-new-recyclerview/"/>
+   <link href="https://quanturium.github.io/2015/04/19/using-cursors-with-the-new-recyclerview/"/>
    <updated>2015-04-19T16:16:00-07:00</updated>
-   <id>http://quanturium.github.io/2015/04/19/using-cursors-with-the-new-recyclerview</id>
+   <id>https://quanturium.github.io/2015/04/19/using-cursors-with-the-new-recyclerview</id>
    <content type="html">&lt;p&gt;Recently, I&amp;rsquo;ve decided to replace the ListViews in my application with the new RecyclerView. Using Cursor all over my application, I needed an equivalent of the &lt;code&gt;CursorAdapter&lt;/code&gt; class. I look up the the recycler-view &lt;a href=&quot;http://developer.android.com/tools/support-library/features.html&quot;&gt;support library&lt;/a&gt; hoping I would find something ready to use but unfortunately there wasn&amp;rsquo;t. I&amp;rsquo;ve found a couple third-party implementations of a &amp;ldquo;&lt;strong&gt;CursorRecyclerAdapter&lt;/strong&gt;&amp;rdquo; and decided to use one.
 A few weeks later, I was profiling my applications and noticed I had a memory problem. After using &lt;a href=&quot;https://eclipse.org/mat/&quot;&gt;MAT&lt;/a&gt; to track down the leak, I realized the third-party class I included in my project was the culprit! Fixing the problem was easy, but I can&amp;rsquo;t help myself thinking about all the developers looking for a &lt;strong&gt;CursorRecyclerAdapter&lt;/strong&gt; library who found this leaky one and used it in their apps without noticing the problem.&lt;/p&gt;
 
