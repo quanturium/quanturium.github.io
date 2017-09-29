@@ -17,7 +17,9 @@
 
   <!-- CSS -->
 
-  <link href='/public/css/global-f06ab77bacf166898d4b407957400ea3.css' rel='stylesheet' type='text/css' />
+  <link rel="stylesheet" href="public/css/poole.css">
+ <link rel="stylesheet" href="public/css/syntax.css">
+ <link rel="stylesheet" href="public/css/hyde.css">
 
   <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 
@@ -79,12 +81,6 @@
       
         
           
-            <a class="sidebar-nav-item" href="/about/">About</a>
-          
-        
-      
-        
-          
             <a class="sidebar-nav-item" href="/archive/">Archive</a>
           
         
@@ -95,12 +91,16 @@
           
         
       
+        
+      
+        
+      
+      <a class="sidebar-nav-item" href="https://arnaudfrugier.com">About</a>
       <a class="sidebar-nav-item" href="/atom.xml">Feed</a><br/>
 
       <a target="_blank" href="https://www.linkedin.com/in/arnaudfrugier"><img src="/public/assets/linkedin-5-32.png" /></a>
       <a target="_blank" href="http://stackoverflow.com/users/1127724/quanturium"><img src="/public/assets/stackoverflow-5-32.png" /></a>
       <a target="_blank" href="https://github.com/quanturium"><img src="/public/assets/github-10-32.png" /></a>
-      <a target="_blank" href="https://plus.google.com/u/0/114838031341699145947"><img src="/public/assets/google-plus-5-32.png" /></a>
     </nav>
   </div>
 </div>
@@ -129,12 +129,12 @@
 <p>Typically the interface <a href="http://developer.android.com/reference/android/database/Cursor.html">Cursor</a> is used for the generic part of the implementation (like this <code>LoaderManager.LoaderCallbacks&lt;Cursor&gt;</code>) as the object returned by the Loader. Since we want to return more than one Cursor and perform more than one query operation in the background, we are going to use our own implementation of the Cursor interface thanks to the <a href="http://developer.android.com/reference/android/database/CursorWrapper.html">CursorWrapper</a> class.</p>
 
 <h2 id="setting-up-the-activity">Setting up the activity</h2>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainActivity</span> <span class="kd">implements</span> <span class="n">LoaderManager</span><span class="o">.</span><span class="na">LoaderCallbacks</span><span class="o">&lt;</span><span class="n">DirectoryCursor</span><span class="o">&gt;</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainActivity</span> <span class="kd">implements</span> <span class="n">LoaderManager</span><span class="o">.</span><span class="na">LoaderCallbacks</span><span class="o">&lt;</span><span class="n">DirectoryCursor</span><span class="o">&gt;</span>
 <span class="o">{</span>
   <span class="nd">@Override</span>
   <span class="kd">public</span> <span class="n">Loader</span><span class="o">&lt;</span><span class="n">DirectoryCursor</span><span class="o">&gt;</span> <span class="nf">onCreateLoader</span> <span class="o">(</span><span class="kt">int</span> <span class="n">loaderId</span><span class="o">,</span> <span class="n">Bundle</span> <span class="n">args</span><span class="o">)</span>
   <span class="o">{</span>
-    <span class="k">return</span> <span class="k">new</span> <span class="nf">DirectoryCursorLoader</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="n">DirectoryCursorLoader</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
   <span class="o">}</span>
 
   <span class="nd">@Override</span>
@@ -158,7 +158,7 @@
 <p>Now that the activity is set up, let&rsquo;s implement the <strong>DirectoryCursor</strong> and <strong>DirectoryCursorLoader</strong> classes.</p>
 
 <h2 id="using-a-different-cursor">Using a different cursor</h2>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DirectoryCursor</span> <span class="kd">extends</span> <span class="n">CursorWrapper</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DirectoryCursor</span> <span class="kd">extends</span> <span class="n">CursorWrapper</span>
 <span class="o">{</span>
   <span class="kd">private</span> <span class="kd">final</span> <span class="n">File</span> <span class="n">directory</span><span class="o">;</span>
 
@@ -179,7 +179,7 @@
 <h2 id="extending-the-asynctaskloader">Extending the AsyncTaskLoader</h2>
 
 <p>We are going to implement our DirectoryCursorLoader class which will load data in the background. This one is a little longer to implement. To achieve the following code, I&rsquo;ve copied the source code of the CursorLoader class, removed the parts we didn&rsquo;t need and then I&rsquo;ve implemented the <code>loadInBackground()</code> method which will be responsible of our custom logic. Let&rsquo;s take a look at this class and the <code>loadInBackgorund()</code> method:</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">DirectoryCursorLoader</span> <span class="kd">extends</span> <span class="n">AsyncTaskLoader</span><span class="o">&lt;</span><span class="n">DirectoryCursor</span><span class="o">&gt;</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">DirectoryCursorLoader</span> <span class="kd">extends</span> <span class="n">AsyncTaskLoader</span><span class="o">&lt;</span><span class="n">DirectoryCursor</span><span class="o">&gt;</span>
 <span class="o">{</span>
   <span class="kd">final</span> <span class="n">ForceLoadContentObserver</span> <span class="n">mObserver</span><span class="o">;</span>
   <span class="n">DirectoryCursor</span> <span class="n">mCursor</span><span class="o">;</span>
@@ -187,7 +187,7 @@
   <span class="kd">public</span> <span class="nf">DirectoryCursorLoader</span> <span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">)</span>
   <span class="o">{</span>
   <span class="kd">super</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
-  <span class="n">mObserver</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ForceLoadContentObserver</span><span class="o">();</span>
+  <span class="n">mObserver</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ForceLoadContentObserver</span><span class="o">();</span>
   <span class="o">}</span>
 
   <span class="cm">/* Runs on a worker thread */</span>
@@ -206,14 +206,14 @@
       <span class="k">if</span> <span class="o">(</span><span class="n">parentCursor</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">parentCursor</span><span class="o">.</span><span class="na">moveToFirst</span><span class="o">())</span>
       <span class="o">{</span>
         <span class="c1">// Map the cursor to an object. This is basically getting all the columns from the cursor and setting them as instance variables inside our newly created File object.</span>
-        <span class="n">File</span> <span class="n">directory</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">File</span><span class="o">(</span><span class="n">parentCursor</span><span class="o">);</span>
+        <span class="n">File</span> <span class="n">directory</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">parentCursor</span><span class="o">);</span>
 
         <span class="c1">// Execute our second query based on the result of the first one which will get the list of files belonging to the directory object</span>
         <span class="n">childrenCursor</span> <span class="o">=</span> <span class="n">getContext</span><span class="o">().</span><span class="na">getContentResolver</span><span class="o">().</span><span class="na">query</span><span class="o">([...]);</span>
 
         <span class="k">if</span> <span class="o">(</span><span class="n">childrenCursor</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
         <span class="o">{</span>
-          <span class="n">directoryCursor</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">DirectoryCursor</span><span class="o">(</span><span class="n">directory</span><span class="o">,</span> <span class="n">childrenCursor</span><span class="o">);</span>
+          <span class="n">directoryCursor</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DirectoryCursor</span><span class="o">(</span><span class="n">directory</span><span class="o">,</span> <span class="n">childrenCursor</span><span class="o">);</span>
 
           <span class="k">try</span>
           <span class="o">{</span>
@@ -349,7 +349,7 @@
       
       <div class="footer">
         <p>
-          &copy; 2015. All rights reserved.
+          &copy; 2017. All rights reserved.
         </p>
       </div>
     </div>
